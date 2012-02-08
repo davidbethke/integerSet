@@ -3,6 +3,7 @@
 #include "IntegerSet.h"
 #include <iostream>
 #include <sstream>
+#include <string>
 class IntegerSetTest :
 	public ::testing::Test
 {
@@ -11,19 +12,31 @@ protected:
 	{
 	v=IntegerSet();
 	v2=IntegerSet();
-	//std::ostringstream oss;
-    //std::streambuf* p_cout_streambuf = std::cout.rdbuf();
-	 p_cout_streambuf = std::cout.rdbuf();
-   
+	unionSet=IntegerSet();
+	evenSet=IntegerSet();
+	evenSet2=IntegerSet();
+	oddSet=IntegerSet();
+	p_cout_streambuf = std::cout.rdbuf();
+   //
+	even(evenSet);
+	even(evenSet2);
+	odd(oddSet);
+	eString(evenString);
+	oString(oddString);
 	}
 	virtual void TearDown()
 	{
 		std::cout.rdbuf(p_cout_streambuf); // restore
 	
 	}
-	IntegerSet v, v2;
+	void even(IntegerSet&);
+	void odd(IntegerSet&);
+	void eString(std::string &);
+	void oString(std::string &);
+	IntegerSet v, v2,unionSet,evenSet, oddSet,evenSet2;
 	std::ostringstream oss;
     std::streambuf* p_cout_streambuf;
+	std::string evenString, oddString;
 public:
 	IntegerSetTest(void);
 	~IntegerSetTest(void);

@@ -9,5 +9,6 @@ public:
 	void printSet() const;
 	void insertElement(int);
 	IntegerSet unionOfSets(const IntegerSet&);
+	IntegerSet intersectionOfSets(const IntegerSet&);
 };
 

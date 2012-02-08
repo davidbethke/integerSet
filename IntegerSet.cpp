@@ -36,9 +36,20 @@ IntegerSet IntegerSet::unionOfSets(const IntegerSet &other)
 	IntegerSet unionSet;
 	for(int i=0; i<SIZE;++i)
 	{
-		if(this->v[i] || other.v[i])
+		if(v[i] || other.v[i])
 			unionSet.v[i]=true;
-		return unionSet;
 	}
+	return unionSet;
+
+}
+IntegerSet IntegerSet::intersectionOfSets(const IntegerSet &other)
+{
+	IntegerSet unionSet;
+	for(int i=0; i<SIZE;++i)
+	{
+		if(v[i] && other.v[i])
+			unionSet.v[i]=true;
+	}
+	return unionSet;
 
 }

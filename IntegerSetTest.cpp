@@ -13,6 +13,37 @@ IntegerSetTest::IntegerSetTest(void)
 IntegerSetTest::~IntegerSetTest(void)
 {
 }
+void IntegerSetTest::even(IntegerSet & evenSet)
+{
+	//set even to evens
+	for(int i=0; i<evenSet.SIZE;++i)
+	{
+		if(!(i%2))
+			evenSet.v[i]=true;
+	}
+	// set 0 to FALSE
+	evenSet.v[0]=true;
+}
+void IntegerSetTest::odd(IntegerSet & oddSet)
+{
+	//set even to evens
+	for(int i=0; i<oddSet.SIZE;++i)
+	{
+		if((i%2))
+			oddSet.v[i]=true;
+	}
+	// set 0 to FALSE
+	oddSet.v[0]=true;
+}
+void IntegerSetTest::oString(string& oS)
+{
+	oS="0 1 3 5 7 9 11 13 15 17 19 21 23 25 27 29 31 33 35 37 39 41 43 45 47 49 51 53 55 57 59 61 63 65 67 69 71 73 75 77 79 81 83 85 87 89 91 93 95 97 99 ";
+}
+void IntegerSetTest::eString(string& eS)
+{
+	eS="0 2 4 6 8 10 12 14 16 18 20 22 24 26 28 30 32 34 36 38 40 42 44 46 48 50 52 54 56 58 60 62 64 66 68 70 72 74 76 78 80 82 84 86 88 90 92 94 96 98 100 ";
+}
+
 
 TEST_F(IntegerSetTest, testEmpty)
 {
@@ -100,23 +131,110 @@ TEST_F(IntegerSetTest,unionTest1)
 		if(!(i%2))
 			v.v[i]=true;
 	}
-	// set 0 to false
-	v.v[0]=false;
+	// set 0 to FALSE
+	v.v[0]=true;
 	//set v2 to odds
 	for(int i=0; i<v2.SIZE;++i)
 	{
 		if(i%2)
-			v.v[i]=true;
+			v2.v[i]=true;
 	}
-	// set 0 to false
+	// set 0 to FALSE
 	v2.v[0]=false;
 	unionSet=v.unionOfSets(v2);
 	std::cout.rdbuf(oss.rdbuf());
-	unionSet.printSet();
-	EXPECT_EQ("\n",oss.str())<< "Expected No Union Vals";
+	v.printSet();
+	
+	EXPECT_EQ(evenString + "\n",oss.str())<< "Expected All Even Vals";
+	
+	
+	v2.printSet();
+
+	//EXPECT_EQ(evenString+"\n"+ oddString + "\n",oss.str())<< "Expected All Odd Vals"; //hack, need to figure out how to clear the buffer DISABLE
 	//inspect vals of unionSet as a doubleCheck
 	for(int i=0; i<unionSet.SIZE;++i)
-		EXPECT_FALSE(unionSet.v[i])<< "Element:"<<i<<" Fail, Should be false";
+		EXPECT_TRUE(unionSet.v[i])<< "Element:"<<i<<" Fail, Should be TRUE";
 
 		
 }
+TEST_F(IntegerSetTest,evenTestManual)
+{
+	for(int i=0; i<v.SIZE;++i)
+	{
+		if(!(i%2))
+			v.v[i]=true;
+	}
+	// set 0 to FALSE
+	v.v[0]=true;
+	for(int i=0; i<v.SIZE;++i)
+	{
+		if(!(i%2))
+			EXPECT_TRUE(v.v[i])<< "Element:"<<i<<" Fail, Should be TRUE";
+		else
+			EXPECT_FALSE(v.v[i])<< "Element:"<<i<<" Fail, Should be FALSE";
+
+	}
+
+}
+
+TEST_F(IntegerSetTest,evenTest)
+{
+	for(int i=0; i<evenSet.SIZE;++i)
+	{
+		if(!(i%2))
+			EXPECT_TRUE(evenSet.v[i])<< "Element:"<<i<<" Fail, Should be TRUE";
+		else
+			EXPECT_FALSE(evenSet.v[i])<< "Element:"<<i<<" Fail, Should be FALSE";
+
+	}
+}
+//UnionTest2
+TEST_F(IntegerSetTest,unionTest2)
+{
+	IntegerSet unionSet;
+	IntegerSet emptySet;
+	unionSet=evenSet.unionOfSets(emptySet);
+	for(int i=0; i<unionSet.SIZE;++i)
+	{
+		if(!(i%2))//even
+			EXPECT_TRUE(unionSet.v[i])<<"Element:"<<i<<" Fail, Should be TRUE";
+		else
+			EXPECT_FALSE(unionSet.v[i])<< "Element:"<<i<<" Fail, Should be FALSE";
+	}
+}
+TEST_F(IntegerSetTest,intersectionTest1)
+{
+	IntegerSet intersectionSet;
+	intersectionSet=evenSet.intersectionOfSets(oddSet);
+	EXPECT_TRUE(intersectionSet.v[0])<<"Element: 0 should be TRUE";
+	for(int i=1; i<intersectionSet.SIZE;++i)
+	{
+		EXPECT_FALSE(intersectionSet.v[i])<<"Element:"<<i<<" should be FALSE";
+	}
+}
+TEST_F(IntegerSetTest,intersectionTest2)
+{
+	IntegerSet intersectionSet;
+	intersectionSet=evenSet.intersectionOfSets(evenSet2);
+	for(int i=0;i<intersectionSet.SIZE;++i)
+	{
+		if(!(i%2))
+			EXPECT_TRUE(intersectionSet.v[i])<<"Element:"<<i<<" should be TRUE";
+		else
+			EXPECT_FALSE(intersectionSet.v[i])<<"Element:"<<i<<"should be FALSE";
+	}
+}
+TEST_F(IntegerSetTest,intersectionTest3)
+{
+	IntegerSet intersectionSet;
+	IntegerSet emptySet;
+	intersectionSet=oddSet.intersectionOfSets(emptySet);
+	for(int i=0; i<intersectionSet.SIZE;++i)
+	{
+		EXPECT_FALSE(intersectionSet.v[i])<<"Element:"<<i<<" should be FALSE";
+	}
+}
+		
+
+
+
