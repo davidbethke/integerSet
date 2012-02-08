@@ -1,0 +1,6 @@
+*.obj
+*.user
+*.pch
+*.vspscc
+*.cache
+*.log
