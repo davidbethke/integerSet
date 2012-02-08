@@ -1,4 +1,7 @@
 #include <vector>
+#include <iostream>
+#include <ostream>
+class ostream;
 class IntegerSet
 {
 public:
@@ -8,7 +11,9 @@ public:
 	static const int SIZE=101;
 	void printSet() const;
 	void insertElement(int);
+	void deleteElement(int);
 	IntegerSet unionOfSets(const IntegerSet&);
 	IntegerSet intersectionOfSets(const IntegerSet&);
+	
 };
-
+std::ostream& operator<<(std::ostream&,const IntegerSet&);

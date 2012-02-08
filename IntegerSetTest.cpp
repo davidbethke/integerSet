@@ -234,7 +234,37 @@ TEST_F(IntegerSetTest,intersectionTest3)
 		EXPECT_FALSE(intersectionSet.v[i])<<"Element:"<<i<<" should be FALSE";
 	}
 }
-		
+TEST_F(IntegerSetTest,deleteSingleElement)
+{
+	IntegerSet mySet;
+	int i=rand()%100;
+	mySet.insertElement(i);
+	EXPECT_TRUE(mySet.v[i])<<"Element:"<<i<<" should be TRUE";
+	mySet.deleteElement(i);
+	EXPECT_FALSE(mySet.v[i])<<"Element:"<<i<<" should be FALSE";
+}
+TEST_F(IntegerSetTest,deleteMultElement)
+{
+	//verify evenSET
+	for(int i=0; i<evenSet.SIZE;++i)
+	{
+		if(!(i%2))
+			EXPECT_TRUE(evenSet.v[i])<<"Element:"<<i<<" should be TRUE";
+		else
+			EXPECT_FALSE(evenSet.v[i])<<"Element:"<<i<<" should be FALSE";
+	}
+	for(int i=0; i<evenSet.SIZE;++i)
+		evenSet.deleteElement(i);
+	for(int i=0;i<evenSet.SIZE;++i)
+		EXPECT_FALSE(evenSet.v[i])<<"Element:"<<i<<" should be FALSE (deleted)";
+}
+	
+TEST_F(IntegerSetTest,opOS)
+{
+	std::cout.rdbuf(oss.rdbuf());
+	std::cout << evenSet;
+	EXPECT_EQ(evenString+"\n",oss.str())<<"Expect even vals";
+}
 
 
 

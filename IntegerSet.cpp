@@ -1,7 +1,7 @@
 #include "StdAfx.h"
 #include "IntegerSet.h"
-#include <iostream>
-
+//#include <iostream>
+//#include <ostream>
 using namespace std;
 
 
@@ -31,6 +31,15 @@ void IntegerSet::insertElement(int i)
 	}
 
 }
+void IntegerSet::deleteElement(int i)
+{
+	if(i>=0 && i<SIZE)
+	{
+		if(v[i]) // if its true, set it to false, otherwise nothing
+			v[i]=false;
+	}
+
+}
 IntegerSet IntegerSet::unionOfSets(const IntegerSet &other)
 {
 	IntegerSet unionSet;
@@ -53,3 +62,13 @@ IntegerSet IntegerSet::intersectionOfSets(const IntegerSet &other)
 	return unionSet;
 
 }
+std::ostream& operator<<(std::ostream& os, const IntegerSet& iS)
+{
+	//printSet();// might not be right, only cout, could be some sstream or something else redirected
+	for (int i=0; i<iS.SIZE;++i)
+		if(iS.v[i])
+			os<< i<< " ";
+	os<<endl;
+	return os;
+}
+
