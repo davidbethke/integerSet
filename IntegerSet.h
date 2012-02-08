@@ -12,8 +12,13 @@ public:
 	void printSet() const;
 	void insertElement(int);
 	void deleteElement(int);
-	IntegerSet unionOfSets(const IntegerSet&);
-	IntegerSet intersectionOfSets(const IntegerSet&);
+	IntegerSet unionOfSets(const IntegerSet&)const;
+	IntegerSet intersectionOfSets(const IntegerSet&)const ;
+	IntegerSet operator|(const IntegerSet&) const;
+	IntegerSet operator&(const IntegerSet&) const;
+	bool operator==(const IntegerSet&)const;
+	void operator+=(int);
+	void operator-=(int);
 	
 };
 std::ostream& operator<<(std::ostream&,const IntegerSet&);

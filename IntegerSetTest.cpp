@@ -265,6 +265,42 @@ TEST_F(IntegerSetTest,opOS)
 	std::cout << evenSet;
 	EXPECT_EQ(evenString+"\n",oss.str())<<"Expect even vals";
 }
+TEST_F(IntegerSetTest,opPipe)
+{
+	IntegerSet unionSet;
+	unionSet=evenSet | oddSet;
+	for(int i=0; i< unionSet.SIZE;++i)
+		EXPECT_TRUE(unionSet.v[i])<<"Element:"<<i<<" should be TRUE";
+
+}
+TEST_F(IntegerSetTest,opAmpersand)
+{
+	IntegerSet unionSet;
+	IntegerSet emptySet;
+	unionSet=evenSet & emptySet;
+	for(int i=0; i< unionSet.SIZE;++i)
+		EXPECT_FALSE(unionSet.v[i])<<"Element:"<<i<<" should be FALSE";
+
+}
+TEST_F(IntegerSetTest,opEqual)
+{
+	EXPECT_TRUE(evenSet==evenSet)<<"Expect TRUE, evenSet";
+	EXPECT_TRUE(evenSet==evenSet2)<<"Expect TRUE, evenSet";
+	EXPECT_FALSE(evenSet==oddSet)<<"Expect FALSE, evenSet/oddSet";
+}
+TEST_F(IntegerSetTest,opIns)
+{
+	EXPECT_FALSE(evenSet.v[99])<<"Expect FALSE, insertElement op += at 99, precondition";
+	evenSet+=99;
+	EXPECT_TRUE(evenSet.v[99])<<"Expect TRUE, insertElement op += at 99";
+}
+TEST_F(IntegerSetTest,opDel)
+{
+	EXPECT_TRUE(evenSet.v[98])<<"Expect TRUE, insertElement op -= at 98, precondition";
+	evenSet-=98;
+	EXPECT_FALSE(evenSet.v[98])<<"Expect FALSE, insertElement op -= at 98";
+}
+
 
 
 

@@ -40,7 +40,7 @@ void IntegerSet::deleteElement(int i)
 	}
 
 }
-IntegerSet IntegerSet::unionOfSets(const IntegerSet &other)
+IntegerSet IntegerSet::unionOfSets(const IntegerSet &other) const
 {
 	IntegerSet unionSet;
 	for(int i=0; i<SIZE;++i)
@@ -51,7 +51,7 @@ IntegerSet IntegerSet::unionOfSets(const IntegerSet &other)
 	return unionSet;
 
 }
-IntegerSet IntegerSet::intersectionOfSets(const IntegerSet &other)
+IntegerSet IntegerSet::intersectionOfSets(const IntegerSet &other) const
 {
 	IntegerSet unionSet;
 	for(int i=0; i<SIZE;++i)
@@ -62,6 +62,34 @@ IntegerSet IntegerSet::intersectionOfSets(const IntegerSet &other)
 	return unionSet;
 
 }
+IntegerSet IntegerSet::operator|(const IntegerSet &other) const
+{
+	return unionOfSets(other);
+}
+IntegerSet IntegerSet::operator&(const IntegerSet &other) const
+{
+	return intersectionOfSets(other);
+}
+bool IntegerSet::operator==(const IntegerSet & other)const
+{
+	
+	for(int i=0; i<SIZE;++i)
+	{
+		if(v[i] != other.v[i])
+			return false;
+	}
+	return true;
+
+}
+void IntegerSet::operator+=(int i)
+{
+	insertElement(i);
+}
+void IntegerSet::operator-=(int i)
+{
+	deleteElement(i);
+}
+
 std::ostream& operator<<(std::ostream& os, const IntegerSet& iS)
 {
 	//printSet();// might not be right, only cout, could be some sstream or something else redirected
