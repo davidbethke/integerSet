@@ -10,6 +10,12 @@ class IntegerSetTest :
 protected:
 	virtual void SetUp()
 	{
+	//v=IntegerSet();
+	//v2=IntegerSet();
+	//unionSet=IntegerSet();
+	//evenSet=IntegerSet();
+	//evenSet2=IntegerSet();
+	//oddSet=IntegerSet();
 	v=IntegerSet();
 	v2=IntegerSet();
 	unionSet=IntegerSet();

@@ -5,10 +5,14 @@ class ostream;
 class IntegerSet
 {
 public:
-	IntegerSet(void);
+	//IntegerSet();
+	IntegerSet(int s=101);
+	IntegerSet(int[],int);
 	~IntegerSet(void);
+	 int SIZE;
+	
+	int *arr;
 	std::vector<bool> v;
-	static const int SIZE=101;
 	void printSet() const;
 	void insertElement(int);
 	void deleteElement(int);
@@ -19,6 +23,7 @@ public:
 	bool operator==(const IntegerSet&)const;
 	void operator+=(int);
 	void operator-=(int);
-	
+	IntegerSet& operator=(const IntegerSet&);
+	size_t max(int arr[],int);
 };
 std::ostream& operator<<(std::ostream&,const IntegerSet&);

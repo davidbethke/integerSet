@@ -300,6 +300,30 @@ TEST_F(IntegerSetTest,opDel)
 	evenSet-=98;
 	EXPECT_FALSE(evenSet.v[98])<<"Expect FALSE, insertElement op -= at 98";
 }
+TEST_F(IntegerSetTest,varArr)
+{
+	//simple test
+	int arr[]={5,5,4,3,2,2};
+	IntegerSet varSet(arr,6);
+	EXPECT_TRUE(varSet.v[5])<<"Element 5 should be TRUE";
+	EXPECT_FALSE(varSet.v[0])<<"Element 0 should be FALSE";
+
+}
+
+TEST_F(IntegerSetTest,varArr2)
+{
+	
+	int arr[]={5,99,4,3,2,2};
+	IntegerSet varSet(arr,6);
+	EXPECT_TRUE(varSet.v[5])<<"Element 5 should be TRUE";
+	EXPECT_FALSE(varSet.v[0])<<"Element 0 should be FALSE";
+	EXPECT_EQ(100,varSet.SIZE)<< "Size should be 100";
+	//varSet.insertElement(99);
+	EXPECT_TRUE(varSet.v[99])<<"Element 99 should be TRUE";
+	EXPECT_EQ(100,varSet.v.size());
+
+}
+
 
 
 

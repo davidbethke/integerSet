@@ -4,14 +4,32 @@
 //#include <ostream>
 using namespace std;
 
+/*
+IntegerSet::IntegerSet():v(SIZE,false)
+{
+}
+*/
 
-IntegerSet::IntegerSet(void):v(SIZE,false)
+IntegerSet::IntegerSet(int s):SIZE(s),v(SIZE,false)
 {
 }
 
 
+IntegerSet::IntegerSet(int a[],int s):arr(a),SIZE(s),v(SIZE,false)
+{
+	// assume max int val> arr size, so need to resize vect to accomodate largest val
+	int arrS=SIZE;
+	size_t maxV= max(arr,SIZE);
+	v.resize(maxV+1,false);
+	SIZE=maxV+1;
+	for(int i=0; i<arrS;++i)
+		insertElement(arr[i]);
+	
+}
+
 IntegerSet::~IntegerSet(void)
 {
+	//delete arr;
 }
 void IntegerSet::printSet() const
 {
@@ -90,6 +108,27 @@ void IntegerSet::operator-=(int i)
 	deleteElement(i);
 }
 
+IntegerSet& IntegerSet::operator=(const IntegerSet& other)
+{
+	if(this!=&other)
+	{
+		// assume same size
+		for(int i=0; i<SIZE;++i)
+			v[i]=other.v[i];
+	}
+	return *this;
+}
+size_t IntegerSet::max(int arr[],int s)
+{
+	int max=arr[0];
+	for(int i=1;i<s;++i)
+	{
+		if(arr[i]>max)
+			max=arr[i];
+	}
+	return max;
+}
+
 std::ostream& operator<<(std::ostream& os, const IntegerSet& iS)
 {
 	//printSet();// might not be right, only cout, could be some sstream or something else redirected
@@ -99,4 +138,5 @@ std::ostream& operator<<(std::ostream& os, const IntegerSet& iS)
 	os<<endl;
 	return os;
 }
+
 
