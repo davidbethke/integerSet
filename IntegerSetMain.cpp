@@ -3,7 +3,9 @@
 
 #include "stdafx.h"
 #include <iostream>
-#include "gtest/gtest.h"
+#ifdef _DEBUG
+	#include "gtest/gtest.h"
+#endif //_DEBUG
 #include "IntegerSet.h"
 
 //TODO Jenkins Test Release and Debug build
