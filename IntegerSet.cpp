@@ -81,13 +81,14 @@ IntegerSet IntegerSet::unionOfSets(const IntegerSet &other) const
 }
 IntegerSet IntegerSet::intersectionOfSets(const IntegerSet &other) const
 {
-	IntegerSet unionSet;  //TODO Support intersection of equal size Sets?max size of an intersection is the min(size,other.size) <<assumption>>
+	int min =minSize(size,other.size);
+	IntegerSet intersectSet(min);  //TODO Support intersection of equal size Sets?max size of an intersection is the min(size,other.size) <<assumption>>
 	for(int i=0; i<size;++i)
 	{
 		if(v[i] && other.v[i])
-			unionSet.v[i]=true;
+			intersectSet.v[i]=true;
 	}
-	return unionSet;
+	return intersectSet;
 
 }
 IntegerSet IntegerSet::operator|(const IntegerSet &other) const
@@ -147,7 +148,7 @@ size_t IntegerSet::findArrayMaxVal(int arr[],int s)
 	}
 	return max;
 }
-int IntegerSet::min(int a, int b)
+int IntegerSet::minSize(int a, int b) const
 {
 	if(a<b)
 		return a;

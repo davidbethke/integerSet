@@ -29,6 +29,6 @@ private:
 	int *arr;
 	std::vector<bool> v;
 	size_t findArrayMaxVal(int arr[],int);
-	int min(int,int);
+	int minSize(int,int) const;
 };
 std::ostream& operator<<(std::ostream&,const IntegerSet&);

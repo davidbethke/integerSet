@@ -38,7 +38,19 @@ int main(int argc, char** argv)
 	makeEven(halfSizeSet);
 	makeOdd(oddSet);
 	const IntegerSet constSet(varSet);
-	
+	//Check print with printSet
+	cout << "Print Empty"<<endl;
+	empty.printSet();cout <<endl;
+	cout << "Print Even"<<endl;
+	evenSet.printSet();cout <<endl;
+	cout << "Print halfSize"<<endl;
+	halfSizeSet.printSet();cout <<endl;
+	cout << "Print Odd"<<endl;
+	oddSet.printSet();cout <<endl;
+	cout << "Print array Init'd"<<endl;
+	varSet.printSet();cout <<endl;
+	cout << "Print const"<<endl;
+	constSet.printSet();cout <<endl;
 	//Check print with cout
 	cout << "Print Empty"<<endl;
 	cout <<empty<<endl;
@@ -52,6 +64,85 @@ int main(int argc, char** argv)
 	cout <<varSet<<endl;
 	cout << "Print const"<<endl;
 	cout <<constSet<<endl;
+
+	//Insert using insertElement
+	cout << "Insert Empty"<<endl;
+	empty.insertElement(0);
+	cout <<empty<<endl;
+	cout << "Insert Even"<<endl;
+	evenSet.insertElement(1);
+	cout <<evenSet<<endl;
+	cout << "Insert halfSize"<<endl;
+	halfSizeSet.insertElement(1);
+	cout <<halfSizeSet<<endl;
+	cout << "Insert Odd"<<endl;
+	oddSet.insertElement(2);
+	cout <<oddSet<<endl;
+	cout << "Insert array Init'd"<<endl;
+	varSet.insertElement(44);
+	cout <<varSet<<endl;
+	cout << "Can='t Insert const"<<endl;
+	//constSet.insertElement(44); //error can't insert
+	cout <<constSet<<endl;
+
+	//Delete using deleteElement
+	cout << "Delete Empty"<<endl;
+	empty.deleteElement(0);
+	cout <<empty<<endl;
+	cout << "Delete Even"<<endl;
+	evenSet.deleteElement(1);
+	cout <<evenSet<<endl;
+	cout << "Delete halfSize"<<endl;
+	halfSizeSet.deleteElement(1);
+	cout <<halfSizeSet<<endl;
+	cout << "Delete Odd"<<endl;
+	oddSet.deleteElement(2);
+	cout <<oddSet<<endl;
+	cout << "Delete array Init'd"<<endl;
+	varSet.deleteElement(44);
+	cout <<varSet<<endl;
+	cout << "Can='t Delete const"<<endl;
+	//constSet.deleteElement(44); //error can't insert
+	cout <<constSet<<endl;
+
+	//union of Sets
+	cout << "Empty union Even"<<endl;
+	IntegerSet unionEE=empty.unionOfSets(evenSet);
+	cout <<unionEE<<endl;
+	cout << "Odd union Even"<<endl;
+	IntegerSet unionOE=oddSet.unionOfSets(evenSet);
+	cout <<unionOE<<endl;
+	cout << "Odd union HalfSize"<<endl;
+	IntegerSet unionOH=oddSet.unionOfSets(halfSizeSet);
+	cout <<unionOH<<endl;
+	cout << "Even union const"<<endl;
+	IntegerSet unionEC=evenSet.unionOfSets(constSet);
+	cout <<unionEC<<endl;
+
+	//intersection of Sets
+	cout << "Empty intersection Even"<<endl;
+	IntegerSet intersectEE=empty.intersectionOfSets(evenSet);
+	cout <<intersectEE<<endl;
+	cout << "Odd intersection Even"<<endl;
+	IntegerSet intersectOE=oddSet.intersectionOfSets(evenSet);
+	cout <<intersectOE<<endl;
+	cout << "Odd intersection HalfSize"<<endl;
+	IntegerSet intersectOH=oddSet.intersectionOfSets(halfSizeSet);
+	cout <<intersectOH<<endl;
+	cout << "Even intersection HalfSize"<<endl;
+	IntegerSet intersectEH=evenSet.intersectionOfSets(halfSizeSet);
+	cout <<intersectEH<<endl;
+	cout << "HalfSize intersection Odd"<<endl;
+	IntegerSet intersectHO=halfSizeSet.intersectionOfSets(oddSet);
+	cout <<intersectHO<<endl;
+	cout << "Even intersection const"<<endl;
+	IntegerSet intersectEC=evenSet.intersectionOfSets(constSet);
+	cout <<intersectEC<<endl;
+	cout << "Even intersection Even"<<endl;
+	IntegerSet intersectEv=evenSet.intersectionOfSets(evenSet);
+	cout <<intersectEv<<endl;
+	
+
 
 	std::getchar();
 #endif //NDEBUG
