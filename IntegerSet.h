@@ -1,7 +1,6 @@
 #include <vector>
 #include <iostream>
 #include <ostream>
-class ostream;
 class IntegerSet
 {
 friend	std::ostream& operator<<(std::ostream&, const IntegerSet&);
