@@ -327,6 +327,49 @@ TEST_F(IntegerSetTest,varArr2)
 	EXPECT_EQ(100,varSet.v.size());
 
 }
+TEST_F(IntegerSetTest,copyConstructor1)
+{
+	std::cout.rdbuf(oss.rdbuf());
+	IntegerSet emptySet;
+	IntegerSet myCopy(evenSet);
+	IntegerSet myOCopy(oddSet);
+	IntegerSet myECopy(emptySet);
+	myCopy.printSet();
+	EXPECT_EQ(evenString+"\n",oss.str())<<"Copy Constructor Failed";
+	oss.str("");
+	myOCopy.printSet();
+	EXPECT_EQ(oddString+"\n",oss.str())<<"Copy Constructor Failed";
+	oss.str("");
+	myECopy.printSet();
+	EXPECT_EQ(empty+"\n",oss.str())<<"Copy Constructor Failed";
+
+}
+//TODO test assignment operator with two unequal size sets
+TEST_F(IntegerSetTest,assignTest)
+{
+	std::cout.rdbuf(oss.rdbuf());
+	IntegerSet emptySet;
+	//assign even to odd
+	//verify first
+	evenSet.printSet();
+	EXPECT_EQ(evenString+"\n",oss.str())<<"Should be All Even";
+	oss.str("");
+	oddSet.printSet();
+	EXPECT_EQ(oddString+"\n",oss.str())<<"Should be All Odd";
+	oss.str("");
+	//assign
+	oddSet=evenSet;
+	oddSet.printSet();
+	EXPECT_EQ(evenString+"\n",oss.str())<<"Should be All Even";
+	oss.str("");
+	evenSet=emptySet;
+	evenSet.printSet();
+	EXPECT_EQ(empty+"\n",oss.str())<<"Should be All Empty";
+	oss.str("");
+
+
+}
+
 
 
 

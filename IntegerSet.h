@@ -24,8 +24,8 @@ public:
 	bool operator==(const IntegerSet&)const;
 	void operator+=(int);
 	void operator-=(int);
-	size_t max(int arr[],int);
 private:
 	int *arr;
+	size_t max(int arr[],int);
 };
 std::ostream& operator<<(std::ostream&,const IntegerSet&);

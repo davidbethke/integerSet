@@ -122,7 +122,8 @@ IntegerSet& IntegerSet::operator=(const IntegerSet& other)
 {
 	if(this!=&other)
 	{
-		// assume same size
+		//resize, re init
+		v.resize(other.SIZE,false);
 		for(int i=0; i<SIZE;++i)
 			v[i]=other.v[i];
 	}
