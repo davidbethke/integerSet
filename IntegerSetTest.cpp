@@ -5,7 +5,7 @@
 #include <sstream>
 using namespace std;
 //DONE multi assignment a=b=c
-//TODO const tests
+//DONE const tests
 //TODO test union/ intersection of unequal size sets
 
 IntegerSetTest::IntegerSetTest(void)
@@ -50,8 +50,10 @@ void IntegerSetTest::eString(string& es)
 {
 	es="0 2 4 6 8 10 12 14 16 18 20 22 24 26 28 30 32 34 36 38 40 42 44 46 48 50 52 54 56 58 60 62 64 66 68 70 72 74 76 78 80 82 84 86 88 90 92 94 96 98 100 ";
 }
-
-
+void IntegerSetTest::eVString(string& eVs)
+{
+	eVs="0 2 3 4 5 6 8 10 12 14 16 18 20 22 24 26 28 30 32 34 36 38 40 42 44 46 48 50 52 54 56 58 60 62 64 66 68 70 72 74 76 78 80 82 84 86 88 90 92 94 96 98 100 200 ";
+}
 TEST_F(IntegerSetTest, testempty)
 {
 	for (int i=0; i<101; ++i)
@@ -457,6 +459,36 @@ TEST_F(IntegerSetTest,testConst)
 	//myConstSet.deleteElement(99); //error, good
 	//myConstSet = varSet; // should fail can't assign to a const, error looks good
 	// check union, check intersection, equal size sets
+
+}
+TEST_F(IntegerSetTest,DISABLED_testUnionUnEqual)
+{
+	std::cout.rdbuf(oss.rdbuf());
+	int arr[]={5,200,4,3,2,2};
+	IntegerSet varSet(arr,6);
+	IntegerSet unionSet=varSet|evenSet;
+	IntegerSet unionSet2=evenSet|varSet;
+	unionSet.printSet();
+	EXPECT_EQ(evenVarString,oss.str())<<"Even Set Fail";
+	oss.str("");
+	unionSet2.printSet();
+	EXPECT_EQ(evenVarString,oss.str())<<"Even Set Fail";
+
+
+}
+TEST_F(IntegerSetTest,testIntersectionUnEqual)
+{
+	std::cout.rdbuf(oss.rdbuf());
+	int arr[]={5,200,4,3,2,2};
+	IntegerSet varSet(arr,6);
+	IntegerSet intersectSet=varSet&evenSet;
+	EXPECT_EQ(201,varSet.size)<<"Var size fail";
+	IntegerSet intersectSet2=evenSet&varSet;
+	intersectSet.printSet();
+	EXPECT_EQ("2 4 ",oss.str())<<"Even Set Fail";
+	oss.str("");
+	intersectSet2.printSet();
+	EXPECT_EQ("2 4 ",oss.str())<<"Even Set Fail";
 
 }
 

@@ -15,7 +15,7 @@
 //FAIL Try to overload the [] operator
 //TODO duplicate tests in a main program
 //DONE make vector private?
-//TODO check const IntegerSets and see what happens
+//DONE check const IntegerSets and see what happens
 //DONE isEqualTo member function, should dup ==?
 //DONE uncapitalize SIZE since not const
 using namespace std;

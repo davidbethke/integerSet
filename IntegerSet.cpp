@@ -82,8 +82,8 @@ IntegerSet IntegerSet::unionOfSets(const IntegerSet &other) const
 IntegerSet IntegerSet::intersectionOfSets(const IntegerSet &other) const
 {
 	int min =minSize(size,other.size);
-	IntegerSet intersectSet(min);  //TODO Support intersection of equal size Sets?max size of an intersection is the min(size,other.size) <<assumption>>
-	for(int i=0; i<size;++i)
+	IntegerSet intersectSet(min);  //Done Support intersection of equal size Sets?max size of an intersection is the min(size,other.size) <<assumption>>
+	for(int i=0; i<min;++i)       // TODO iterate over my size, other size, min size?
 	{
 		if(v[i] && other.v[i])
 			intersectSet.v[i]=true;
@@ -101,7 +101,7 @@ IntegerSet IntegerSet::operator&(const IntegerSet &other) const
 }
 bool IntegerSet::operator==(const IntegerSet & other)const
 {
-	//TODO fix multiple return badness
+	//FAIL fix multiple return badness
 
 	if(size != other.size)
 		return false;
