@@ -11,7 +11,7 @@ public:
 	IntegerSet(const IntegerSet&); // copy constructor
 	IntegerSet& operator=(const IntegerSet&);
 	~IntegerSet(void);
-	int SIZE;
+	int size;
 //	std::vector<bool> v;
 	void printSet() const;
 	void insertElement(int);

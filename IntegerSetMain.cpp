@@ -12,12 +12,12 @@
 //DONE printset empty set prints ---
 //DONE fix assignment operator, to resize
 //TODO Double Check the Assignment in the Text Book
-//TODO Try to overload the [] operator
+//FAIL Try to overload the [] operator
 //TODO duplicate tests in a main program
 //TODO make vector private?
 //TODO check const IntegerSets and see what happens
 //TODO isEqualTo member function, should dup ==?
-//TODO uncapitalize SIZE since not const
+//DONE uncapitalize SIZE since not const
 int main(int argc, char** argv) 
 {
 #ifdef _DEBUG

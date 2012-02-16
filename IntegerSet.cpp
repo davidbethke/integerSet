@@ -5,30 +5,30 @@
 using namespace std;
 
 /*
-IntegerSet::IntegerSet():v(SIZE,false)
+IntegerSet::IntegerSet():v(size,false)
 {
 }
 */
 
-IntegerSet::IntegerSet(int s):SIZE(s),v(SIZE,false)
+IntegerSet::IntegerSet(int s):size(s),v(size,false)
 {
 }
 
 
-IntegerSet::IntegerSet(int a[],int s):arr(a),SIZE(s),v(SIZE,false)
+IntegerSet::IntegerSet(int a[],int s):arr(a),size(s),v(size,false)
 {
 	// assume max int val> arr size, so need to resize vect to accomodate largest val
-	int arrS=SIZE;
-	size_t maxV= max(arr,SIZE);
+	int arrS=size;
+	size_t maxV= max(arr,size);
 	v.resize(maxV+1,false);
-	SIZE=maxV+1;
+	size=maxV+1;
 	for(int i=0; i<arrS;++i)
 		insertElement(arr[i]);
 	
 }
-IntegerSet::IntegerSet(const IntegerSet &other):SIZE(other.SIZE),v(other.SIZE,false)
+IntegerSet::IntegerSet(const IntegerSet &other):size(other.size),v(other.size,false)
 {
-	for(int i=0; i<SIZE;++i)
+	for(int i=0; i<size;++i)
 		v[i]=other.v[i];
 
 }
@@ -39,7 +39,7 @@ IntegerSet::~IntegerSet(void)
 void IntegerSet::printSet() const
 {
 	bool empty=true;
-	for (int i=0; i<SIZE;++i)
+	for (int i=0; i<size;++i)
 	{
 		if (v[i])
 		{
@@ -53,7 +53,7 @@ void IntegerSet::printSet() const
 }
 void IntegerSet::insertElement(int i)
 {
-	if(i>=0 && i<SIZE) // bounds check
+	if(i>=0 && i<size) // bounds check
 	{
 		if(!v[i])    // insert if false
 			v[i]=true;
@@ -62,7 +62,7 @@ void IntegerSet::insertElement(int i)
 }
 void IntegerSet::deleteElement(int i)
 {
-	if(i>=0 && i<SIZE)
+	if(i>=0 && i<size)
 	{
 		if(v[i]) // if its true, set it to false, otherwise nothing
 			v[i]=false;
@@ -72,7 +72,7 @@ void IntegerSet::deleteElement(int i)
 IntegerSet IntegerSet::unionOfSets(const IntegerSet &other) const
 {
 	IntegerSet unionSet;
-	for(int i=0; i<SIZE;++i)
+	for(int i=0; i<size;++i)
 	{
 		if(v[i] || other.v[i])
 			unionSet.v[i]=true;
@@ -82,7 +82,7 @@ IntegerSet IntegerSet::unionOfSets(const IntegerSet &other) const
 IntegerSet IntegerSet::intersectionOfSets(const IntegerSet &other) const
 {
 	IntegerSet unionSet;
-	for(int i=0; i<SIZE;++i)
+	for(int i=0; i<size;++i)
 	{
 		if(v[i] && other.v[i])
 			unionSet.v[i]=true;
@@ -102,9 +102,9 @@ bool IntegerSet::operator==(const IntegerSet & other)const
 {
 	//TODO fix multiple return badness
 	//TODO check for self ==? is it worth it?
-	if(SIZE != other.SIZE)
+	if(size != other.size)
 		return false;
-	for(int i=0; i<SIZE;++i)
+	for(int i=0; i<size;++i)
 	{
 		if(v[i] != other.v[i])
 			return false;
@@ -126,9 +126,9 @@ IntegerSet& IntegerSet::operator=(const IntegerSet& other)
 	if(this!=&other)
 	{
 		//resize, re init
-		SIZE=other.SIZE;
-		v.resize(SIZE,false);
-		for(int i=0; i<SIZE;++i)
+		size=other.size;
+		v.resize(size,false);
+		for(int i=0; i<size;++i)
 			v[i]=other.v[i];
 	}
 	return *this;
@@ -145,7 +145,7 @@ size_t IntegerSet::max(int arr[],int s)
 }
 bool IntegerSet::operator[](int i)
 {
-	if(i<0 || i>=SIZE)   // out of bounds
+	if(i<0 || i>=size)   // out of bounds
 	{
 		cerr << "Access to IntegerSet Out of Bounds"<<endl;
 		exit(1);
@@ -154,7 +154,7 @@ bool IntegerSet::operator[](int i)
 }
 bool IntegerSet::operator[](int i) const
 {
-	if(i<0 || i>=SIZE)   // out of bounds
+	if(i<0 || i>=size)   // out of bounds
 	{
 		cerr << "Access to IntegerSet Out of Bounds"<<endl;
 		exit(1);
@@ -165,7 +165,7 @@ std::ostream& operator<<(std::ostream& os, const IntegerSet& iS)
 {
 	//printSet();// might not be right, only cout, could be some sstream or something else redirected
 	bool empty=true;
-	for (int i=0; i<iS.SIZE;++i)
+	for (int i=0; i<iS.size;++i)
 	{
 		if(iS.v[i])
 		{
