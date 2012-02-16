@@ -143,7 +143,24 @@ size_t IntegerSet::max(int arr[],int s)
 	}
 	return max;
 }
-
+bool IntegerSet::operator[](int i)
+{
+	if(i<0 || i>=SIZE)   // out of bounds
+	{
+		cerr << "Access to IntegerSet Out of Bounds"<<endl;
+		exit(1);
+	}
+	return v[i];// Does Not return a reference, by design http://www.gotw.ca/publications/N1185.pdf
+}
+bool IntegerSet::operator[](int i) const
+{
+	if(i<0 || i>=SIZE)   // out of bounds
+	{
+		cerr << "Access to IntegerSet Out of Bounds"<<endl;
+		exit(1);
+	}
+	return v[i];
+}
 std::ostream& operator<<(std::ostream& os, const IntegerSet& iS)
 {
 	//printSet();// might not be right, only cout, could be some sstream or something else redirected

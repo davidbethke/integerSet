@@ -4,6 +4,7 @@
 class ostream;
 class IntegerSet
 {
+friend	std::ostream& operator<<(std::ostream&, const IntegerSet&);
 public:
 	IntegerSet(int s=101); // default constructor
 	IntegerSet(int[],int); // pass in an array and construct an IntegerSet
@@ -11,7 +12,7 @@ public:
 	IntegerSet& operator=(const IntegerSet&);
 	~IntegerSet(void);
 	int SIZE;
-	std::vector<bool> v;
+//	std::vector<bool> v;
 	void printSet() const;
 	void insertElement(int);
 	void deleteElement(int);
@@ -24,8 +25,11 @@ public:
 	bool operator==(const IntegerSet&)const;
 	void operator+=(int);
 	void operator-=(int);
+	bool operator[](int); // broken for bools, hack just return by val
+	bool operator[](int) const;
 private:
 	int *arr;
+	std::vector<bool> v;
 	size_t max(int arr[],int);
 };
 std::ostream& operator<<(std::ostream&,const IntegerSet&);

@@ -4,6 +4,8 @@
 #include <iostream>
 #include <sstream>
 using namespace std;
+//TODO multi assignment a=b=c
+//TODO const tests
 
 IntegerSetTest::IntegerSetTest(void)
 {
@@ -19,10 +21,12 @@ void IntegerSetTest::even(IntegerSet & evenSet)
 	for(int i=0; i<evenSet.SIZE;++i)
 	{
 		if(!(i%2))
-			evenSet.v[i]=true;
+			//evenSet[i]=true;
+			evenSet.insertElement(i);
 	}
 	// set 0 to FALSE
-	evenSet.v[0]=true;
+	//evenSet[0]=true;
+	evenSet.insertElement(0);
 }
 void IntegerSetTest::odd(IntegerSet & oddSet)
 {
@@ -30,10 +34,12 @@ void IntegerSetTest::odd(IntegerSet & oddSet)
 	for(int i=0; i<oddSet.SIZE;++i)
 	{
 		if((i%2))
-			oddSet.v[i]=true;
+			//oddSet[i]=true;
+			oddSet.insertElement(i);
 	}
 	// set 0 to FALSE
-	oddSet.v[0]=true;
+	//oddSet[0]=true;
+	oddSet.insertElement(0);
 }
 void IntegerSetTest::oString(string& oS)
 {
@@ -48,34 +54,41 @@ void IntegerSetTest::eString(string& eS)
 TEST_F(IntegerSetTest, testEmpty)
 {
 	for (int i=0; i<101; ++i)
-		EXPECT_FALSE(v.v[i])<< "Element:"<<i<<" Fail";
+		EXPECT_FALSE(v[i])<< "Element:"<<i<<" Fail";
 
 }
 TEST_F(IntegerSetTest,testOneVal)
 {
 	int iR=rand()%100;
-	v.v[iR]=true;
+	v.insertElement(iR);
 	for (int i=0; i<101; ++i)
 		if(i==iR)
-			EXPECT_TRUE(v.v[i])<<"Element:"<<i<<" Fail";
+			EXPECT_TRUE(v[i])<<"Element:"<<i<<" Fail";
 		else
-			EXPECT_FALSE(v.v[i])<< "Element:"<<i<<" Fail";
+			EXPECT_FALSE(v[i])<< "Element:"<<i<<" Fail";
 }
 TEST_F(IntegerSetTest,testMultVal)
 {
-	v.v[0]=v.v[1]=v.v[20]=v.v[44]=v.v[56]=v.v[100]=true;
+//	v[0]=v[1]=v[20]=v[44]=v[56]=v[100]=true;
+	v.insertElement(0);
+	v.insertElement(1);
+	v.insertElement(20);
+	v.insertElement(44);
+	v.insertElement(56);
+	v.insertElement(100);
 	for (int i=0; i<101; ++i)
 		if(i==0 || i==1 || i==20 || i==44 || i==56 || i==100)
-			EXPECT_TRUE(v.v[i])<< "Element:"<<i<<" Fail";
+			EXPECT_TRUE(v[i])<< "Element:"<<i<<" Fail";
 		else
-			EXPECT_FALSE(v.v[i])<< "Element:"<<i<<" Fail";
+			EXPECT_FALSE(v[i])<< "Element:"<<i<<" Fail";
 }
 TEST_F(IntegerSetTest,testPrintOneVal)
 {
 	std::ostringstream oss;
 	std::streambuf* p_cout_streambuf = std::cout.rdbuf();
 	std::cout.rdbuf(oss.rdbuf());
-	v.v[0]=true;
+	//v[0]=true;
+	v.insertElement(0);
 	v.printSet();
 	std::cout.rdbuf(p_cout_streambuf); // restore
 	
@@ -88,7 +101,13 @@ TEST_F(IntegerSetTest,testPrintMultVal)
 	std::ostringstream oss;
 	std::streambuf* p_cout_streambuf = std::cout.rdbuf();
 	std::cout.rdbuf(oss.rdbuf());
-	v.v[0]=v.v[1]=v.v[20]=v.v[44]=v.v[56]=v.v[100]=true;
+	//v[0]=v[1]=v[20]=v[44]=v[56]=v[100]=true;
+	v.insertElement(0);
+	v.insertElement(1);
+	v.insertElement(20);
+	v.insertElement(44);
+	v.insertElement(56);
+	v.insertElement(100);
 	v.printSet();
 	std::cout.rdbuf(p_cout_streambuf); // restore
 	
@@ -99,20 +118,20 @@ TEST_F(IntegerSetTest,testPrintMultVal)
 TEST_F(IntegerSetTest,insertOneElement)
 {
 	v.insertElement(0);
-	EXPECT_TRUE(v.v[0])<< "Element 0 Not set";
+	EXPECT_TRUE(v[0])<< "Element 0 Not set";
 }
 
 TEST_F(IntegerSetTest,insertElementAgain)
 {
 	v.insertElement(0);
-	EXPECT_TRUE(v.v[0])<< "Element 0 Not set";
+	EXPECT_TRUE(v[0])<< "Element 0 Not set";
 	v.insertElement(0);
-	EXPECT_TRUE(v.v[0])<< "Not inserted a Second Time";
+	EXPECT_TRUE(v[0])<< "Not inserted a Second Time";
 }
 TEST_F(IntegerSetTest,insertElement100)
 {
 	v.insertElement(100);
-	EXPECT_TRUE(v.v[100])<< "Not inserted at element 100";
+	EXPECT_TRUE(v[100])<< "Not inserted at element 100";
 }
 TEST_F(IntegerSetTest,insertOutOfBounds)
 {
@@ -135,18 +154,18 @@ TEST_F(IntegerSetTest,unionTest1)
 	for(int i=0; i<v.SIZE;++i)
 	{
 		if(!(i%2))
-			v.v[i]=true;
+			v.insertElement(i);
 	}
 	// set 0 to FALSE
-	v.v[0]=true;
+	v.insertElement(0);
 	//set v2 to odds
 	for(int i=0; i<v2.SIZE;++i)
 	{
 		if(i%2)
-			v2.v[i]=true;
+			v2.insertElement(i);
 	}
 	// set 0 to FALSE
-	v2.v[0]=false;
+	v2.deleteElement(0);
 	unionSet=v.unionOfSets(v2);
 	v.printSet();
 	EXPECT_EQ(evenString,oss.str())<< "Expected All Even Vals";
@@ -159,23 +178,23 @@ TEST_F(IntegerSetTest,unionTest1)
 	EXPECT_EQ(101,unionSet.SIZE);
 	//inspect vals of unionSet as a doubleCheck
 	for(int i=0; i<unionSet.SIZE;++i)
-		EXPECT_TRUE(unionSet.v[i])<< "Element:"<<i<<" Fail, Should be TRUE";
+		EXPECT_TRUE(unionSet[i])<< "Element:"<<i<<" Fail, Should be TRUE";
 }
 TEST_F(IntegerSetTest,evenTestManual)
 {
 	for(int i=0; i<v.SIZE;++i)
 	{
 		if(!(i%2))
-			v.v[i]=true;
+			v.insertElement(i);
 	}
 	// set 0 to FALSE
-	v.v[0]=true;
+	v.insertElement(0);
 	for(int i=0; i<v.SIZE;++i)
 	{
 		if(!(i%2))
-			EXPECT_TRUE(v.v[i])<< "Element:"<<i<<" Fail, Should be TRUE";
+			EXPECT_TRUE(v[i])<< "Element:"<<i<<" Fail, Should be TRUE";
 		else
-			EXPECT_FALSE(v.v[i])<< "Element:"<<i<<" Fail, Should be FALSE";
+			EXPECT_FALSE(v[i])<< "Element:"<<i<<" Fail, Should be FALSE";
 
 	}
 
@@ -186,9 +205,9 @@ TEST_F(IntegerSetTest,evenTest)
 	for(int i=0; i<evenSet.SIZE;++i)
 	{
 		if(!(i%2))
-			EXPECT_TRUE(evenSet.v[i])<< "Element:"<<i<<" Fail, Should be TRUE";
+			EXPECT_TRUE(evenSet[i])<< "Element:"<<i<<" Fail, Should be TRUE";
 		else
-			EXPECT_FALSE(evenSet.v[i])<< "Element:"<<i<<" Fail, Should be FALSE";
+			EXPECT_FALSE(evenSet[i])<< "Element:"<<i<<" Fail, Should be FALSE";
 
 	}
 }
@@ -201,19 +220,19 @@ TEST_F(IntegerSetTest,unionTest2)
 	for(int i=0; i<unionSet.SIZE;++i)
 	{
 		if(!(i%2))//even
-			EXPECT_TRUE(unionSet.v[i])<<"Element:"<<i<<" Fail, Should be TRUE";
+			EXPECT_TRUE(unionSet[i])<<"Element:"<<i<<" Fail, Should be TRUE";
 		else
-			EXPECT_FALSE(unionSet.v[i])<< "Element:"<<i<<" Fail, Should be FALSE";
+			EXPECT_FALSE(unionSet[i])<< "Element:"<<i<<" Fail, Should be FALSE";
 	}
 }
 TEST_F(IntegerSetTest,intersectionTest1)
 {
 	IntegerSet intersectionSet;
 	intersectionSet=evenSet.intersectionOfSets(oddSet);
-	EXPECT_TRUE(intersectionSet.v[0])<<"Element: 0 should be TRUE";
+	EXPECT_TRUE(intersectionSet[0])<<"Element: 0 should be TRUE";
 	for(int i=1; i<intersectionSet.SIZE;++i)
 	{
-		EXPECT_FALSE(intersectionSet.v[i])<<"Element:"<<i<<" should be FALSE";
+		EXPECT_FALSE(intersectionSet[i])<<"Element:"<<i<<" should be FALSE";
 	}
 }
 TEST_F(IntegerSetTest,intersectionTest2)
@@ -223,9 +242,9 @@ TEST_F(IntegerSetTest,intersectionTest2)
 	for(int i=0;i<intersectionSet.SIZE;++i)
 	{
 		if(!(i%2))
-			EXPECT_TRUE(intersectionSet.v[i])<<"Element:"<<i<<" should be TRUE";
+			EXPECT_TRUE(intersectionSet[i])<<"Element:"<<i<<" should be TRUE";
 		else
-			EXPECT_FALSE(intersectionSet.v[i])<<"Element:"<<i<<"should be FALSE";
+			EXPECT_FALSE(intersectionSet[i])<<"Element:"<<i<<"should be FALSE";
 	}
 }
 TEST_F(IntegerSetTest,intersectionTest3)
@@ -235,7 +254,7 @@ TEST_F(IntegerSetTest,intersectionTest3)
 	intersectionSet=oddSet.intersectionOfSets(emptySet);
 	for(int i=0; i<intersectionSet.SIZE;++i)
 	{
-		EXPECT_FALSE(intersectionSet.v[i])<<"Element:"<<i<<" should be FALSE";
+		EXPECT_FALSE(intersectionSet[i])<<"Element:"<<i<<" should be FALSE";
 	}
 }
 TEST_F(IntegerSetTest,deleteSingleElement)
@@ -243,9 +262,9 @@ TEST_F(IntegerSetTest,deleteSingleElement)
 	IntegerSet mySet;
 	int i=rand()%100;
 	mySet.insertElement(i);
-	EXPECT_TRUE(mySet.v[i])<<"Element:"<<i<<" should be TRUE";
+	EXPECT_TRUE(mySet[i])<<"Element:"<<i<<" should be TRUE";
 	mySet.deleteElement(i);
-	EXPECT_FALSE(mySet.v[i])<<"Element:"<<i<<" should be FALSE";
+	EXPECT_FALSE(mySet[i])<<"Element:"<<i<<" should be FALSE";
 }
 TEST_F(IntegerSetTest,deleteMultElement)
 {
@@ -253,14 +272,14 @@ TEST_F(IntegerSetTest,deleteMultElement)
 	for(int i=0; i<evenSet.SIZE;++i)
 	{
 		if(!(i%2))
-			EXPECT_TRUE(evenSet.v[i])<<"Element:"<<i<<" should be TRUE";
+			EXPECT_TRUE(evenSet[i])<<"Element:"<<i<<" should be TRUE";
 		else
-			EXPECT_FALSE(evenSet.v[i])<<"Element:"<<i<<" should be FALSE";
+			EXPECT_FALSE(evenSet[i])<<"Element:"<<i<<" should be FALSE";
 	}
 	for(int i=0; i<evenSet.SIZE;++i)
 		evenSet.deleteElement(i);
 	for(int i=0;i<evenSet.SIZE;++i)
-		EXPECT_FALSE(evenSet.v[i])<<"Element:"<<i<<" should be FALSE (deleted)";
+		EXPECT_FALSE(evenSet[i])<<"Element:"<<i<<" should be FALSE (deleted)";
 }
 	
 TEST_F(IntegerSetTest,opOS)
@@ -274,7 +293,7 @@ TEST_F(IntegerSetTest,opPipe)
 	IntegerSet unionSet;
 	unionSet=evenSet | oddSet;
 	for(int i=0; i< unionSet.SIZE;++i)
-		EXPECT_TRUE(unionSet.v[i])<<"Element:"<<i<<" should be TRUE";
+		EXPECT_TRUE(unionSet[i])<<"Element:"<<i<<" should be TRUE";
 
 }
 TEST_F(IntegerSetTest,opAmpersand)
@@ -283,7 +302,7 @@ TEST_F(IntegerSetTest,opAmpersand)
 	IntegerSet emptySet;
 	unionSet=evenSet & emptySet;
 	for(int i=0; i< unionSet.SIZE;++i)
-		EXPECT_FALSE(unionSet.v[i])<<"Element:"<<i<<" should be FALSE";
+		EXPECT_FALSE(unionSet[i])<<"Element:"<<i<<" should be FALSE";
 
 }
 TEST_F(IntegerSetTest,opEqual)
@@ -294,23 +313,23 @@ TEST_F(IntegerSetTest,opEqual)
 }
 TEST_F(IntegerSetTest,opIns)
 {
-	EXPECT_FALSE(evenSet.v[99])<<"Expect FALSE, insertElement op += at 99, precondition";
+	EXPECT_FALSE(evenSet[99])<<"Expect FALSE, insertElement op += at 99, precondition";
 	evenSet+=99;
-	EXPECT_TRUE(evenSet.v[99])<<"Expect TRUE, insertElement op += at 99";
+	EXPECT_TRUE(evenSet[99])<<"Expect TRUE, insertElement op += at 99";
 }
 TEST_F(IntegerSetTest,opDel)
 {
-	EXPECT_TRUE(evenSet.v[98])<<"Expect TRUE, insertElement op -= at 98, precondition";
+	EXPECT_TRUE(evenSet[98])<<"Expect TRUE, insertElement op -= at 98, precondition";
 	evenSet-=98;
-	EXPECT_FALSE(evenSet.v[98])<<"Expect FALSE, insertElement op -= at 98";
+	EXPECT_FALSE(evenSet[98])<<"Expect FALSE, insertElement op -= at 98";
 }
 TEST_F(IntegerSetTest,varArr)
 {
 	//simple test
 	int arr[]={5,5,4,3,2,2};
 	IntegerSet varSet(arr,6);
-	EXPECT_TRUE(varSet.v[5])<<"Element 5 should be TRUE";
-	EXPECT_FALSE(varSet.v[0])<<"Element 0 should be FALSE";
+	EXPECT_TRUE(varSet[5])<<"Element 5 should be TRUE";
+	EXPECT_FALSE(varSet[0])<<"Element 0 should be FALSE";
 
 }
 
@@ -319,12 +338,12 @@ TEST_F(IntegerSetTest,varArr2)
 	
 	int arr[]={5,99,4,3,2,2};
 	IntegerSet varSet(arr,6);
-	EXPECT_TRUE(varSet.v[5])<<"Element 5 should be TRUE";
-	EXPECT_FALSE(varSet.v[0])<<"Element 0 should be FALSE";
+	EXPECT_TRUE(varSet[5])<<"Element 5 should be TRUE";
+	EXPECT_FALSE(varSet[0])<<"Element 0 should be FALSE";
 	EXPECT_EQ(100,varSet.SIZE)<< "Size should be 100";
 	//varSet.insertElement(99);
-	EXPECT_TRUE(varSet.v[99])<<"Element 99 should be TRUE";
-	EXPECT_EQ(100,varSet.v.size());
+	EXPECT_TRUE(varSet[99])<<"Element 99 should be TRUE";
+	EXPECT_EQ(100,varSet.SIZE);
 
 }
 TEST_F(IntegerSetTest,copyConstructor1)
