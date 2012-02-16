@@ -73,8 +73,8 @@ TEST_F(IntegerSetTest,testMultVal)
 TEST_F(IntegerSetTest,testPrintOneVal)
 {
 	std::ostringstream oss;
-    std::streambuf* p_cout_streambuf = std::cout.rdbuf();
-    std::cout.rdbuf(oss.rdbuf());
+	std::streambuf* p_cout_streambuf = std::cout.rdbuf();
+	std::cout.rdbuf(oss.rdbuf());
 	v.v[0]=true;
 	v.printSet();
 	std::cout.rdbuf(p_cout_streambuf); // restore
@@ -86,8 +86,8 @@ TEST_F(IntegerSetTest,testPrintOneVal)
 TEST_F(IntegerSetTest,testPrintMultVal)
 {
 	std::ostringstream oss;
-    std::streambuf* p_cout_streambuf = std::cout.rdbuf();
-    std::cout.rdbuf(oss.rdbuf());
+	std::streambuf* p_cout_streambuf = std::cout.rdbuf();
+	std::cout.rdbuf(oss.rdbuf());
 	v.v[0]=v.v[1]=v.v[20]=v.v[44]=v.v[56]=v.v[100]=true;
 	v.printSet();
 	std::cout.rdbuf(p_cout_streambuf); // restore
@@ -120,11 +120,17 @@ TEST_F(IntegerSetTest,insertOutOfBounds)
 	v.insertElement(101);
 	 std::cout.rdbuf(oss.rdbuf());
 	 v.printSet();
-	 EXPECT_EQ("\n",oss.str());
+	 EXPECT_EQ(empty+"\n",oss.str());
 }
 TEST_F(IntegerSetTest,unionTest1)
 {
+	std::cout.rdbuf(oss.rdbuf()); // redirect output to oss instead of cout
 	IntegerSet unionSet;
+	unionSet.printSet();
+	EXPECT_EQ(101,unionSet.SIZE)<<"not initialized to the correct size";
+	EXPECT_EQ(empty+"\n",oss.str())<<"not initialized empty";
+	oss.str("");
+
 	//set v to evens
 	for(int i=0; i<v.SIZE;++i)
 	{
@@ -142,20 +148,18 @@ TEST_F(IntegerSetTest,unionTest1)
 	// set 0 to FALSE
 	v2.v[0]=false;
 	unionSet=v.unionOfSets(v2);
-	std::cout.rdbuf(oss.rdbuf());
 	v.printSet();
-	
 	EXPECT_EQ(evenString + "\n",oss.str())<< "Expected All Even Vals";
-	
-	
+	//insert at pos 0	
+	v2.insertElement(0);
+	oss.str(""); // clear string	
 	v2.printSet();
-
-	//EXPECT_EQ(evenString+"\n"+ oddString + "\n",oss.str())<< "Expected All Odd Vals"; //hack, need to figure out how to clear the buffer DISABLE
+	EXPECT_EQ( oddString + "\n",oss.str())<< "Expected All Odd Vals"; 
+	//double check size of unionset
+	EXPECT_EQ(101,unionSet.SIZE);
 	//inspect vals of unionSet as a doubleCheck
 	for(int i=0; i<unionSet.SIZE;++i)
 		EXPECT_TRUE(unionSet.v[i])<< "Element:"<<i<<" Fail, Should be TRUE";
-
-		
 }
 TEST_F(IntegerSetTest,evenTestManual)
 {

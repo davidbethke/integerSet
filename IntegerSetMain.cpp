@@ -8,7 +8,12 @@
 #endif //_DEBUG
 #include "IntegerSet.h"
 
-//TODO Jenkins Test Release and Debug build
+//DONE Jenkins Test Release and Debug build
+//TODO printset empty set prints ---
+//TODO fix assignment operator, to resize
+//TODO Double Check the Assignment in the Text Book
+//TODO Try to overload the [] operator
+//TODO duplicate tests in a main program
 int main(int argc, char** argv) 
 {
 #ifdef _DEBUG
@@ -16,7 +21,7 @@ int main(int argc, char** argv)
 		::testing::GTEST_FLAG(output) = "xml:C:\\Program Files\\Jenkins\\jobs\\IntegerSetUnitTests\\workspace\\test_detail.xml";
 		testing::InitGoogleTest(&argc, argv); 
 		RUN_ALL_TESTS(); 
-	//std::getchar(); // keep console window open until Return keystroke
+		std::getchar(); // keep console window open until Return keystroke
 #endif //_DEBUG
 	/*
 	IntegerSet iS;

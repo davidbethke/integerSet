@@ -29,6 +29,7 @@ protected:
 	odd(oddSet);
 	eString(evenString);
 	oString(oddString);
+	empty="---";
 	}
 	virtual void TearDown()
 	{
@@ -41,8 +42,8 @@ protected:
 	void oString(std::string &);
 	IntegerSet v, v2,unionSet,evenSet, oddSet,evenSet2;
 	std::ostringstream oss;
-    std::streambuf* p_cout_streambuf;
-	std::string evenString, oddString;
+	std::streambuf* p_cout_streambuf;
+	std::string evenString, oddString,empty;
 public:
 	IntegerSetTest(void);
 	~IntegerSetTest(void);

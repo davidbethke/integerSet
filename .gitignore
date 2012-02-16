@@ -4,3 +4,12 @@
 *.vspscc
 *.cache
 *.log
+
+*.tlog
+*.tlog
+*.pch
+*.res
+*.last*
+*.obj
+*.?db
+*.manifest

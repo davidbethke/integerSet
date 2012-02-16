@@ -26,19 +26,30 @@ IntegerSet::IntegerSet(int a[],int s):arr(a),SIZE(s),v(SIZE,false)
 		insertElement(arr[i]);
 	
 }
+IntegerSet::IntegerSet(const IntegerSet &other):SIZE(other.SIZE),v(other.SIZE,false)
+{
+	for(int i=0; i<SIZE;++i)
+		v[i]=other.v[i];
 
+}
 IntegerSet::~IntegerSet(void)
 {
-	//delete arr;
+	//delete[] arr; // No array to delete, it's passed in, assigned
 }
 void IntegerSet::printSet() const
 {
+	bool empty=true;
 	for (int i=0; i<SIZE;++i)
 	{
 		if (v[i])
+		{
 			cout<<i<<" ";
+			empty=false;
+		}
 	}
-	cout <<endl;
+	if(empty)
+		cout<< "---";
+	cout <<endl; //TODO doubled up endl;
 }
 void IntegerSet::insertElement(int i)
 {
@@ -67,7 +78,6 @@ IntegerSet IntegerSet::unionOfSets(const IntegerSet &other) const
 			unionSet.v[i]=true;
 	}
 	return unionSet;
-
 }
 IntegerSet IntegerSet::intersectionOfSets(const IntegerSet &other) const
 {
@@ -132,10 +142,18 @@ size_t IntegerSet::max(int arr[],int s)
 std::ostream& operator<<(std::ostream& os, const IntegerSet& iS)
 {
 	//printSet();// might not be right, only cout, could be some sstream or something else redirected
+	bool empty=true;
 	for (int i=0; i<iS.SIZE;++i)
+	{
 		if(iS.v[i])
+		{
 			os<< i<< " ";
-	os<<endl;
+			empty=false;
+		}
+	}
+	if(empty)
+		os<< "---";
+	os<<endl; //TODO remove this endl, it doubles up the typical cmd cout << integerset<<endl;
 	return os;
 }
 
