@@ -9,11 +9,15 @@
 #include "IntegerSet.h"
 
 //DONE Jenkins Test Release and Debug build
-//TODO printset empty set prints ---
-//TODO fix assignment operator, to resize
+//DONE printset empty set prints ---
+//DONE fix assignment operator, to resize
 //TODO Double Check the Assignment in the Text Book
 //TODO Try to overload the [] operator
 //TODO duplicate tests in a main program
+//TODO make vector private?
+//TODO check const IntegerSets and see what happens
+//TODO isEqualTo member function, should dup ==?
+//TODO uncapitalize SIZE since not const
 int main(int argc, char** argv) 
 {
 #ifdef _DEBUG
@@ -23,6 +27,7 @@ int main(int argc, char** argv)
 		RUN_ALL_TESTS(); 
 		std::getchar(); // keep console window open until Return keystroke
 #endif //_DEBUG
+#ifdef NDEBUG
 	/*
 	IntegerSet iS;
 	iS.insertElement(5);
@@ -30,6 +35,7 @@ int main(int argc, char** argv)
 	std::cout << iS;
 	*/
 		//added to test Jenkins
+#endif //NDEBUG
 
 
 }

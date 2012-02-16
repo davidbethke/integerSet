@@ -49,7 +49,7 @@ void IntegerSet::printSet() const
 	}
 	if(empty)
 		cout<< "---";
-	cout <<endl; //TODO doubled up endl;
+//DONE doubled up endl;
 }
 void IntegerSet::insertElement(int i)
 {
@@ -100,7 +100,10 @@ IntegerSet IntegerSet::operator&(const IntegerSet &other) const
 }
 bool IntegerSet::operator==(const IntegerSet & other)const
 {
-	
+	//TODO fix multiple return badness
+	//TODO check for self ==? is it worth it?
+	if(SIZE != other.SIZE)
+		return false;
 	for(int i=0; i<SIZE;++i)
 	{
 		if(v[i] != other.v[i])
@@ -155,7 +158,7 @@ std::ostream& operator<<(std::ostream& os, const IntegerSet& iS)
 	}
 	if(empty)
 		os<< "---";
-	os<<endl; //TODO remove this endl, it doubles up the typical cmd cout << integerset<<endl;
+	//DONE remove this endl, it doubles up the typical cmd cout << integerset<<endl;
 	return os;
 }
 

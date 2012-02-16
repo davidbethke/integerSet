@@ -79,7 +79,7 @@ TEST_F(IntegerSetTest,testPrintOneVal)
 	v.printSet();
 	std::cout.rdbuf(p_cout_streambuf); // restore
 	
-	EXPECT_EQ("0 \n",oss.str());
+	EXPECT_EQ("0 ",oss.str());
 
 	
 }
@@ -92,7 +92,7 @@ TEST_F(IntegerSetTest,testPrintMultVal)
 	v.printSet();
 	std::cout.rdbuf(p_cout_streambuf); // restore
 	
-	EXPECT_EQ("0 1 20 44 56 100 \n",oss.str());
+	EXPECT_EQ("0 1 20 44 56 100 ",oss.str());
 
 	
 }
@@ -120,7 +120,7 @@ TEST_F(IntegerSetTest,insertOutOfBounds)
 	v.insertElement(101);
 	 std::cout.rdbuf(oss.rdbuf());
 	 v.printSet();
-	 EXPECT_EQ(empty+"\n",oss.str());
+	 EXPECT_EQ(empty,oss.str());
 }
 TEST_F(IntegerSetTest,unionTest1)
 {
@@ -128,7 +128,7 @@ TEST_F(IntegerSetTest,unionTest1)
 	IntegerSet unionSet;
 	unionSet.printSet();
 	EXPECT_EQ(101,unionSet.SIZE)<<"not initialized to the correct size";
-	EXPECT_EQ(empty+"\n",oss.str())<<"not initialized empty";
+	EXPECT_EQ(empty,oss.str())<<"not initialized empty";
 	oss.str("");
 
 	//set v to evens
@@ -149,12 +149,12 @@ TEST_F(IntegerSetTest,unionTest1)
 	v2.v[0]=false;
 	unionSet=v.unionOfSets(v2);
 	v.printSet();
-	EXPECT_EQ(evenString + "\n",oss.str())<< "Expected All Even Vals";
+	EXPECT_EQ(evenString,oss.str())<< "Expected All Even Vals";
 	//insert at pos 0	
 	v2.insertElement(0);
 	oss.str(""); // clear string	
 	v2.printSet();
-	EXPECT_EQ( oddString + "\n",oss.str())<< "Expected All Odd Vals"; 
+	EXPECT_EQ( oddString,oss.str())<< "Expected All Odd Vals"; 
 	//double check size of unionset
 	EXPECT_EQ(101,unionSet.SIZE);
 	//inspect vals of unionSet as a doubleCheck
@@ -267,7 +267,7 @@ TEST_F(IntegerSetTest,opOS)
 {
 	std::cout.rdbuf(oss.rdbuf());
 	std::cout << evenSet;
-	EXPECT_EQ(evenString+"\n",oss.str())<<"Expect even vals";
+	EXPECT_EQ(evenString,oss.str())<<"Expect even vals";
 }
 TEST_F(IntegerSetTest,opPipe)
 {
@@ -335,16 +335,16 @@ TEST_F(IntegerSetTest,copyConstructor1)
 	IntegerSet myOCopy(oddSet);
 	IntegerSet myECopy(emptySet);
 	myCopy.printSet();
-	EXPECT_EQ(evenString+"\n",oss.str())<<"Copy Constructor Failed";
+	EXPECT_EQ(evenString,oss.str())<<"Copy Constructor Failed";
 	oss.str("");
 	myOCopy.printSet();
-	EXPECT_EQ(oddString+"\n",oss.str())<<"Copy Constructor Failed";
+	EXPECT_EQ(oddString,oss.str())<<"Copy Constructor Failed";
 	oss.str("");
 	myECopy.printSet();
-	EXPECT_EQ(empty+"\n",oss.str())<<"Copy Constructor Failed";
+	EXPECT_EQ(empty,oss.str())<<"Copy Constructor Failed";
 
 }
-//TODO test assignment operator with two unequal size sets
+//DONE test assignment operator with two unequal size sets
 TEST_F(IntegerSetTest,assignTest)
 {
 	std::cout.rdbuf(oss.rdbuf());
@@ -352,19 +352,19 @@ TEST_F(IntegerSetTest,assignTest)
 	//assign even to odd
 	//verify first
 	evenSet.printSet();
-	EXPECT_EQ(evenString+"\n",oss.str())<<"Should be All Even";
+	EXPECT_EQ(evenString,oss.str())<<"Should be All Even";
 	oss.str("");
 	oddSet.printSet();
-	EXPECT_EQ(oddString+"\n",oss.str())<<"Should be All Odd";
+	EXPECT_EQ(oddString,oss.str())<<"Should be All Odd";
 	oss.str("");
 	//assign
 	oddSet=evenSet;
 	oddSet.printSet();
-	EXPECT_EQ(evenString+"\n",oss.str())<<"Should be All Even";
+	EXPECT_EQ(evenString,oss.str())<<"Should be All Even";
 	oss.str("");
 	evenSet=emptySet;
 	evenSet.printSet();
-	EXPECT_EQ(empty+"\n",oss.str())<<"Should be All Empty";
+	EXPECT_EQ(empty,oss.str())<<"Should be All Empty";
 	oss.str("");
 
 
@@ -378,18 +378,40 @@ TEST_F(IntegerSetTest,assignTest2)
 	int arr[]={5,99,4,3,2,2};
 	IntegerSet varSet(arr,6);
 	varSet.printSet();
-	EXPECT_EQ("2 3 4 5 99 \n",oss.str())<<"Verify of varArr constructor failed";
+	EXPECT_EQ("2 3 4 5 99 ",oss.str())<<"Verify of varArr constructor failed";
 	oss.str("");
 	emptySet.printSet();
-	EXPECT_EQ(empty+"\n",oss.str())<<"Verify of emptySet constructor failed";
+	EXPECT_EQ(empty,oss.str())<<"Verify of emptySet constructor failed";
 	oss.str("");
 	// assign to emptyset
 	emptySet=varSet;
 	emptySet.printSet();
-	EXPECT_EQ("2 3 4 5 99 \n",oss.str())<<"Verify assignementof emptySet to varSet failed";
+	EXPECT_EQ("2 3 4 5 99 ",oss.str())<<"Verify assignementof emptySet to varSet failed";
 	oss.str("");
+	// check size
+	EXPECT_EQ(100,emptySet.SIZE)<<"EmptySet not resized correctly";// 100 is one more than the 99 of varARR
 
 }
+TEST_F(IntegerSetTest,testEquals)
+{
+	//create an unequal size array ,assign, check
+	IntegerSet emptySet, emptySet2;
+	int arr[]={5,99,4,3,2,2};
+	int arr2[]={5,200,4,3,2,2};
+	IntegerSet varSet(arr,6), varSet2(arr2,6);
+	EXPECT_TRUE(emptySet==emptySet2)<<"Empty Sets not equal";
+	EXPECT_TRUE(emptySet2==emptySet)<<"Empty Sets not equal";
+	EXPECT_FALSE(emptySet==oddSet)<<"Empty set should not equal OddSet";
+	EXPECT_FALSE(emptySet==evenSet)<<"Empty set should not equal EvenSet";
+	EXPECT_FALSE(oddSet==evenSet)<<"Odd set should not equal EvenSet";
+	EXPECT_TRUE(varSet==varSet)<<"Var set failed equality";
+	EXPECT_FALSE(varSet==varSet2)<<"Var set failed equality varSet2";
+	EXPECT_FALSE(varSet==emptySet)<<"Var set failed equality empty";
+	EXPECT_FALSE(varSet==oddSet)<<"Var set failed equality odd";
+	EXPECT_FALSE(varSet==evenSet)<<"Var set failed equality even";
+
+}
+
 
 
 
