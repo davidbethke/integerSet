@@ -370,7 +370,26 @@ TEST_F(IntegerSetTest,assignTest)
 
 }
 
+TEST_F(IntegerSetTest,assignTest2)
+{
+	std::cout.rdbuf(oss.rdbuf());
+	//create an unequal size array ,assign, check
+	IntegerSet emptySet;
+	int arr[]={5,99,4,3,2,2};
+	IntegerSet varSet(arr,6);
+	varSet.printSet();
+	EXPECT_EQ("2 3 4 5 99 \n",oss.str())<<"Verify of varArr constructor failed";
+	oss.str("");
+	emptySet.printSet();
+	EXPECT_EQ(empty+"\n",oss.str())<<"Verify of emptySet constructor failed";
+	oss.str("");
+	// assign to emptyset
+	emptySet=varSet;
+	emptySet.printSet();
+	EXPECT_EQ("2 3 4 5 99 \n",oss.str())<<"Verify assignementof emptySet to varSet failed";
+	oss.str("");
 
+}
 
 
 
