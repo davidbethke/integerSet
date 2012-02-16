@@ -4,8 +4,9 @@
 #include <iostream>
 #include <sstream>
 using namespace std;
-//todo multi assignment a=b=c
-//todo const tests
+//DONE multi assignment a=b=c
+//TODO const tests
+//TODO test union/ intersection of unequal size sets
 
 IntegerSetTest::IntegerSetTest(void)
 {
@@ -428,6 +429,34 @@ TEST_F(IntegerSetTest,testequals)
 	EXPECT_FALSE(varset==emptyset)<<"var set failed equality empty";
 	EXPECT_FALSE(varset==oddSet)<<"var set failed equality odd";
 	EXPECT_FALSE(varset==evenSet)<<"var set failed equality even";
+	// try isEqualTo
+	EXPECT_FALSE(varset.isEqualTo(emptyset))<<"var set failed equality empty";
+	EXPECT_FALSE(varset.isEqualTo(oddSet))<<"var set failed equality odd";
+	EXPECT_FALSE(varset.isEqualTo(evenSet))<<"var set failed equality even";
+
+}
+TEST_F(IntegerSetTest,testMultAssign)
+{
+	IntegerSet evenSetdup(evenSet);
+	evenSet=oddSet=evenSetdup;
+	EXPECT_TRUE(evenSet==evenSetdup)<<"Multi assignment fail";
+}
+TEST_F(IntegerSetTest,testConst)
+{
+	std::cout.rdbuf(oss.rdbuf());
+	int arr[]={5,200,4,3,2,2};
+	IntegerSet varSet(arr,6);
+	const IntegerSet myConstSet(varSet);
+	myConstSet.printSet();
+	EXPECT_EQ("2 3 4 5 200 ",oss.str())<<"Copy constructor of const Set FAIL";
+	oss.str("");
+	// check equality
+	EXPECT_TRUE(varSet==myConstSet)<<"Equality of constSet and non const Set FAIL";
+	// check insert
+	//myConstSet.insertElement(99); //error, good
+	//myConstSet.deleteElement(99); //error, good
+	//myConstSet = varSet; // should fail can't assign to a const, error looks good
+	// check union, check intersection, equal size sets
 
 }
 

@@ -19,10 +19,10 @@ IntegerSet::IntegerSet(int a[],int s):arr(a),size(s),v(size,false)
 {
 	// assume max int val> arr size, so need to resize vect to accomodate largest val
 	int arrS=size;
-	size_t maxV= max(arr,size);
-	v.resize(maxV+1,false);
+	size_t maxV= findArrayMaxVal(arr,size);
+	v.resize(maxV+1,false);   // resize by 1 more, index starts at 0
 	size=maxV+1;
-	for(int i=0; i<arrS;++i)
+	for(int i=0; i<arrS;++i)   //copy
 		insertElement(arr[i]);
 	
 }
@@ -49,11 +49,11 @@ void IntegerSet::printSet() const
 	}
 	if(empty)
 		cout<< "---";
-//DONE doubled up endl;
+
 }
 void IntegerSet::insertElement(int i)
 {
-	if(i>=0 && i<size) // bounds check
+	if(i>=0 && i<size) // bounds check, fail silently
 	{
 		if(!v[i])    // insert if false
 			v[i]=true;
@@ -62,7 +62,7 @@ void IntegerSet::insertElement(int i)
 }
 void IntegerSet::deleteElement(int i)
 {
-	if(i>=0 && i<size)
+	if(i>=0 && i<size) // bounds check, fail silently
 	{
 		if(v[i]) // if its true, set it to false, otherwise nothing
 			v[i]=false;
@@ -71,7 +71,7 @@ void IntegerSet::deleteElement(int i)
 }
 IntegerSet IntegerSet::unionOfSets(const IntegerSet &other) const
 {
-	IntegerSet unionSet;
+	IntegerSet unionSet;   //TODO Support union of equal size Sets?max size of a union of sets is size+other.size <<assumption>>
 	for(int i=0; i<size;++i)
 	{
 		if(v[i] || other.v[i])
@@ -81,7 +81,7 @@ IntegerSet IntegerSet::unionOfSets(const IntegerSet &other) const
 }
 IntegerSet IntegerSet::intersectionOfSets(const IntegerSet &other) const
 {
-	IntegerSet unionSet;
+	IntegerSet unionSet;  //TODO Support intersection of equal size Sets?max size of an intersection is the min(size,other.size) <<assumption>>
 	for(int i=0; i<size;++i)
 	{
 		if(v[i] && other.v[i])
@@ -101,7 +101,7 @@ IntegerSet IntegerSet::operator&(const IntegerSet &other) const
 bool IntegerSet::operator==(const IntegerSet & other)const
 {
 	//TODO fix multiple return badness
-	//TODO check for self ==? is it worth it?
+
 	if(size != other.size)
 		return false;
 	for(int i=0; i<size;++i)
@@ -111,6 +111,10 @@ bool IntegerSet::operator==(const IntegerSet & other)const
 	}
 	return true;
 
+}
+bool IntegerSet::isEqualTo(const IntegerSet & other) const
+{
+	return (*this == other);
 }
 void IntegerSet::operator+=(int i)
 {
@@ -133,7 +137,7 @@ IntegerSet& IntegerSet::operator=(const IntegerSet& other)
 	}
 	return *this;
 }
-size_t IntegerSet::max(int arr[],int s)
+size_t IntegerSet::findArrayMaxVal(int arr[],int s)
 {
 	int max=arr[0];
 	for(int i=1;i<s;++i)
@@ -142,6 +146,13 @@ size_t IntegerSet::max(int arr[],int s)
 			max=arr[i];
 	}
 	return max;
+}
+int IntegerSet::min(int a, int b)
+{
+	if(a<b)
+		return a;
+	else
+		return b;
 }
 bool IntegerSet::operator[](int i)
 {
@@ -163,7 +174,7 @@ bool IntegerSet::operator[](int i) const
 }
 std::ostream& operator<<(std::ostream& os, const IntegerSet& iS)
 {
-	//printSet();// might not be right, only cout, could be some sstream or something else redirected
+	
 	bool empty=true;
 	for (int i=0; i<iS.size;++i)
 	{
@@ -175,7 +186,7 @@ std::ostream& operator<<(std::ostream& os, const IntegerSet& iS)
 	}
 	if(empty)
 		os<< "---";
-	//DONE remove this endl, it doubles up the typical cmd cout << integerset<<endl;
+
 	return os;
 }
 
