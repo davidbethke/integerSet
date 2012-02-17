@@ -1,11 +1,16 @@
 // IntegerSet.cpp : Defines the entry point for the console application.
-//
+//  David Bethke
+//	ITSE 2431 Lab 3
+//  Should work
+
 
 #include "stdafx.h"
 #include <iostream>
+/*Comment out for submitting
 #ifdef _DEBUG
 	#include "gtest/gtest.h"
 #endif //_DEBUG
+	*/
 #include "IntegerSet.h"
 
 //DONE Jenkins Test Release and Debug build
@@ -23,6 +28,7 @@ void makeEven(IntegerSet&);
 void makeOdd(IntegerSet&);
 int main(int argc, char** argv) 
 {
+	/* Comment Out for submitting Assignment
 #ifdef _DEBUG
 		::testing::GTEST_FLAG(print_time) = true;
 		::testing::GTEST_FLAG(output) = "xml:C:\\Program Files\\Jenkins\\jobs\\IntegerSetUnitTests\\workspace\\test_detail.xml";
@@ -30,6 +36,7 @@ int main(int argc, char** argv)
 		RUN_ALL_TESTS(); 
 		std::getchar(); // keep console window open until Return keystroke
 #endif //_DEBUG
+		*/
 #ifdef NDEBUG
 	IntegerSet empty, evenSet, oddSet,evenSet2,oddSet2, halfSizeSet(50);
 	int arr[]={200,5,2,4,2,2,0};
