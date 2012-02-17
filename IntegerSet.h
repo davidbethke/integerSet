@@ -16,14 +16,14 @@ public:
 	void deleteElement(int);
 	IntegerSet unionOfSets(const IntegerSet&)const;				// set methods
 	IntegerSet intersectionOfSets(const IntegerSet&)const ;
-	IntegerSet operator|(const IntegerSet&) const;			// operator overloads
+	IntegerSet operator|(const IntegerSet&) const;				// operator overloads
 	IntegerSet operator&(const IntegerSet&) const;
 	bool operator==(const IntegerSet&)const;
 	bool isEqualTo(const IntegerSet&)const;
 	void operator+=(int);
 	void operator-=(int);
-	bool operator[](int);										// broken for bools, hack just return by val (for TESTING ONLY)
-	bool operator[](int) const;
+	//bool operator[](int);										//required for unit tests broken for bools, hack just return by val (for TESTING ONLY)
+	//bool operator[](int) const;								//required for unit tests experiment only
 private:
 	int *arr;
 	std::vector<bool> v;

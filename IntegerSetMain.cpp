@@ -108,6 +108,9 @@ int main(int argc, char** argv)
 	cout << "Even union const"<<endl;
 	IntegerSet unionEC=evenSet.unionOfSets(constSet);
 	cout <<unionEC<<endl;
+	cout << "Even union varSet"<<endl;
+	IntegerSet unionEvC=evenSet.unionOfSets(varSet);
+	cout <<unionEvC<<endl;
 
 	//intersection of Sets
 	cout << "Empty intersection Even"<<endl;

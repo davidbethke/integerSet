@@ -4,12 +4,6 @@
 //#include <ostream>
 using namespace std;
 
-/*
-IntegerSet::IntegerSet():v(size,false)
-{
-}
-*/
-
 IntegerSet::IntegerSet(int s):size(s),v(size,false)
 {
 }
@@ -72,13 +66,12 @@ void IntegerSet::deleteElement(int i)
 IntegerSet IntegerSet::unionOfSets(const IntegerSet &other) const
 {
 	int min, max;
-	
-	//TODO Support union of equal size Sets?max size of a union of sets is size+other.size <<assumption>>
+	//DONE Support union of unequal size Sets?<<assumption>> small set is a subset of larger set, by our definition
 	// assume unequal size sets,possibly
 	min=minSize(size,other.size);
 	max=maxSize(size,other.size);
-	IntegerSet unionSet(max); 
-	IntegerSet bigSet=getBiggestSet(*this,other);
+	IntegerSet unionSet(max);   //set to return
+	const IntegerSet bigSet=getBiggestSet(*this,other); //id the largest set check its unique half
 	for(int i=0; i<min;++i)
 	{
 		if(v[i] || other.v[i])
@@ -102,7 +95,7 @@ IntegerSet IntegerSet::intersectionOfSets(const IntegerSet &other) const
 {
 	int min =minSize(size,other.size);
 	IntegerSet intersectSet(min);  //Done Should support unequal size sets?max size of an intersection is the min(size,other.size) <<assumption>>
-	for(int i=0; i<min;++i)       // TODO iterate over my size, other size, min size? only fill the new set up to its size min
+	for(int i=0; i<min;++i)       // DONE iterate over  min size only fill the new set up to its size, min
 	{
 		if(v[i] && other.v[i])
 			intersectSet.v[i]=true;
@@ -120,8 +113,7 @@ IntegerSet IntegerSet::operator&(const IntegerSet &other) const
 }
 bool IntegerSet::operator==(const IntegerSet & other)const
 {
-	//FAIL fix multiple return badness
-
+	
 	if(size != other.size)
 		return false;
 	for(int i=0; i<size;++i)
@@ -157,7 +149,7 @@ IntegerSet& IntegerSet::operator=(const IntegerSet& other)
 	}
 	return *this;
 }
-size_t IntegerSet::findArrayMaxVal(int arr[],int s)
+size_t IntegerSet::findArrayMaxVal(int arr[],int s)  //used to size the set when passed an array
 {
 	int max=arr[0];
 	for(int i=1;i<s;++i)
@@ -183,11 +175,12 @@ int IntegerSet::maxSize(int a, int b) const
 }
 const IntegerSet& IntegerSet::getBiggestSet(const IntegerSet& a, const IntegerSet&b) const
 {
-	if(a.size> b.size)
+	if(a.size> b.size) //identify the largest sized set, and return a const ref so that we can union unequal sized sets
 		return a;
 	else
 		return b;
 }
+/* Experiment Only
 bool IntegerSet::operator[](int i)
 {
 	if(i<0 || i>=size)   // out of bounds
@@ -206,6 +199,7 @@ bool IntegerSet::operator[](int i) const
 	}
 	return v[i];
 }
+*/
 std::ostream& operator<<(std::ostream& os, const IntegerSet& iS)
 {
 	
