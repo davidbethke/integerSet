@@ -71,19 +71,38 @@ void IntegerSet::deleteElement(int i)
 }
 IntegerSet IntegerSet::unionOfSets(const IntegerSet &other) const
 {
-	IntegerSet unionSet;   //TODO Support union of equal size Sets?max size of a union of sets is size+other.size <<assumption>>
+	int min, max;
+	
+	//TODO Support union of equal size Sets?max size of a union of sets is size+other.size <<assumption>>
+	// assume unequal size sets,possibly
+	min=minSize(size,other.size);
+	max=maxSize(size,other.size);
+	IntegerSet unionSet(max); 
+	IntegerSet bigSet=getBiggestSet(*this,other);
+	for(int i=0; i<min;++i)
+	{
+		if(v[i] || other.v[i])
+			unionSet.insertElement(i);
+	}
+	for(int i=min;i<max;++i)
+	{
+		if(bigSet.v[i])
+			unionSet.insertElement(i);
+	}
+	/* assume equal size
 	for(int i=0; i<size;++i)
 	{
 		if(v[i] || other.v[i])
 			unionSet.v[i]=true;
 	}
+	*/
 	return unionSet;
 }
 IntegerSet IntegerSet::intersectionOfSets(const IntegerSet &other) const
 {
 	int min =minSize(size,other.size);
-	IntegerSet intersectSet(min);  //Done Support intersection of equal size Sets?max size of an intersection is the min(size,other.size) <<assumption>>
-	for(int i=0; i<min;++i)       // TODO iterate over my size, other size, min size?
+	IntegerSet intersectSet(min);  //Done Should support unequal size sets?max size of an intersection is the min(size,other.size) <<assumption>>
+	for(int i=0; i<min;++i)       // TODO iterate over my size, other size, min size? only fill the new set up to its size min
 	{
 		if(v[i] && other.v[i])
 			intersectSet.v[i]=true;
@@ -151,6 +170,20 @@ size_t IntegerSet::findArrayMaxVal(int arr[],int s)
 int IntegerSet::minSize(int a, int b) const
 {
 	if(a<b)
+		return a;
+	else
+		return b;
+}
+int IntegerSet::maxSize(int a, int b) const
+{
+	if(a>b)
+		return a;
+	else
+		return b;
+}
+const IntegerSet& IntegerSet::getBiggestSet(const IntegerSet& a, const IntegerSet&b) const
+{
+	if(a.size> b.size)
 		return a;
 	else
 		return b;

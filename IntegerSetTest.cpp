@@ -461,7 +461,7 @@ TEST_F(IntegerSetTest,testConst)
 	// check union, check intersection, equal size sets
 
 }
-TEST_F(IntegerSetTest,DISABLED_testUnionUnEqual)
+TEST_F(IntegerSetTest,testUnionUnEqual)
 {
 	std::cout.rdbuf(oss.rdbuf());
 	int arr[]={5,200,4,3,2,2};

@@ -29,5 +29,7 @@ private:
 	std::vector<bool> v;
 	size_t findArrayMaxVal(int arr[],int);
 	int minSize(int,int) const;
+	int maxSize(int,int) const;
+	const IntegerSet& getBiggestSet(const IntegerSet&,const IntegerSet&) const;
 };
 std::ostream& operator<<(std::ostream&,const IntegerSet&);

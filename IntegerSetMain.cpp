@@ -32,7 +32,7 @@ int main(int argc, char** argv)
 #endif //_DEBUG
 #ifdef NDEBUG
 	IntegerSet empty, evenSet, oddSet,evenSet2,oddSet2, halfSizeSet(50);
-	int arr[]={99,5,2,4,2,2,0};
+	int arr[]={200,5,2,4,2,2,0};
 	IntegerSet varSet(arr,7);
 	makeEven(evenSet);
 	makeEven(evenSet2);
@@ -216,6 +216,9 @@ int main(int argc, char** argv)
 	cout << "Even intersection HalfSize"<<endl;
 	IntegerSet intersectEHOp=evenSet&halfSizeSet;
 	cout <<intersectEHOp<<endl;
+	cout << "HalfSize intersection Even"<<endl;
+	IntegerSet intersectHEOp=evenSet&halfSizeSet;
+	cout <<intersectHEOp<<endl;
 	cout << "HalfSize intersection Odd"<<endl;
 	IntegerSet intersectHOOp=halfSizeSet&oddSet;
 	cout <<intersectHOOp<<endl;
